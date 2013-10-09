@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="20" height="20" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="22" height="22" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="grass-tiles-2-small" tilewidth="32" tileheight="32">
   <image source="resources/grass-tiles-2-small.png" width="384" height="192"/>
  </tileset>
  <tileset firstgid="73" name="tree2-final" tilewidth="32" tileheight="32">
   <image source="resources/tree2-final.png" width="256" height="256"/>
  </tileset>
- <layer name="background" width="20" height="20">
+ <layer name="background" width="22" height="22">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA72TzQrCMBCEA1Kq5uJPK9R6rS8gxENvVXz/R3ILOzAsSRqKeBgmfzv5kjbBOfcUhQX/iLainapPrJtEr4h705/zGlGrGhN1nO8L+MA46rgv5LMOPjD2BXwxx/4pvqV69rforjoZvqNoiCh3zpuy7JULWTxm2xOdCTkHYprrL+as/N9gHnsFquez2dpa2zW128i6ge6G59FvTNbsZ7pLXod6uwfn1lQPr0TXhGJ7MB9ndKpN5jtaNuRwPTJK/jPLVlF97B0vvffOreNIeen7ZX9k5tdylPD5lbz/4vuFfwGYsSmTQAYAAA==
+   H4sIAAAAAAAAA8WUzQrCMBCEA6V/9qK1Cra52hcQ6qE3Fd//kdzALgxL0iZa8DBMf9bJl7XZ3BhziVBPKkglqyLlgVpXN5Am0j3C35xXs4ZAneV3D9LT4426d7kd6cSaA7+TXFyvieAV5pmfN4m82oVXmIcEXp8LT4g31N+l3BdpZLWK90C6etRG9MEy2445JROf6esKcmWvkrcHRpdzVj3A703ey5qSO0EO7llnyHnAs3Hy1FXQo1atV8N9pzKdH6HXWCdeGf/+ML+EHHF3hvuAioU1kRezZAZkC/+3DbBKnp4rmYmbIzbAmkOOb06szRPrYUrhWuJNmQ/ot5X+pszfX3ibL/n/xbuFu1x3jseN5WbCB+3acO6QBwAA
   </data>
  </layer>
- <layer name="foreground" width="20" height="20">
+ <layer name="foreground" width="22" height="22">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgGAWjYBSMAtJBNRDXAHEtENdRwbxmIG4B4lYgbqOCeaOA9gAAvYaNfUAGAAA=
+   H4sIAAAAAAAAA2NgGAWjYBSMgpEJqoG4BohrgbiOiuY2A3ELELcCcRsVzR0FwxsAAEo3cjyQBwAA
   </data>
  </layer>
- <layer name="top" width="20" height="20">
+ <layer name="top" width="22" height="22">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3MOVJCARREUbaHgEwiM4KCzCgzkoAmuGzOAn70yjL6XXWSDm4mky7d3y7LAznyFHikSCnQK1OhyhM1nqnTCPSatGjToUuPF/qB3oBX3hgy4p0xk0Bvyow5C5as+OAz0FuzYcuOPQeOnAK9L84J/4VroPfNT8J/4zfQS/d/uwOruuqSQAYAAA==
+   H4sIAAAAAAAAA+3MOVICARRFUbaHgEwiM4KCzCgzkoAmuGzOAjr7mfarOskLbiaTLt3fX5YHcuQp8EiRUqBbpkKVJ2o8U6cR6DZp0aZDlx4v9APdAa+8MWTEO2Mmge6UGXMWLFnxwWegu2bDlh17Dhw5BbpfnBP+C9dA95ufhP/Gb6Cb7n/sDmVUa8OQBwAA
   </data>
  </layer>
- <objectgroup name="collision" width="20" height="20">
-  <object name="treeMask" x="352" y="416" width="128" height="64"/>
-  <object x="514" y="76" width="25" height="17"/>
-  <object x="194" y="44" width="25" height="17"/>
-  <object x="100" y="76" width="25" height="17"/>
-  <object x="260" y="140" width="25" height="17"/>
-  <object x="35" y="236" width="25" height="17"/>
-  <object x="98" y="554" width="25" height="17"/>
-  <object x="258" y="426" width="25" height="17"/>
-  <object x="581" y="428" width="25" height="17"/>
+ <objectgroup name="collision" width="22" height="22">
+  <object name="treeMask" x="384" y="448" width="128" height="64"/>
+  <object x="546" y="108" width="25" height="17"/>
+  <object x="226" y="76" width="25" height="17"/>
+  <object x="132" y="108" width="25" height="17"/>
+  <object x="292" y="172" width="25" height="17"/>
+  <object x="67" y="268" width="25" height="17"/>
+  <object x="130" y="586" width="25" height="17"/>
+  <object x="290" y="458" width="25" height="17"/>
+  <object x="613" y="460" width="25" height="17"/>
+  <object x="0" y="-12" width="704" height="32"/>
+  <object x="704" y="0" width="32" height="704"/>
+  <object x="0" y="704" width="704" height="32"/>
+  <object x="-32" y="0" width="32" height="704"/>
  </objectgroup>
 </map>
