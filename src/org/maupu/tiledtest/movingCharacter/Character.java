@@ -1,18 +1,22 @@
 package org.maupu.tiledtest.movingCharacter;
 
-import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.geom.Shape;
 
 public class Character {
+	public final static int DIRECTION_UP=0;
+	public final static int DIRECTION_DOWN=1;
+	public final static int DIRECTION_LEFT=2;
+	public final static int DIRECTION_RIGHT=3;
 	private SpriteSheet spriteSheet;
-	private Rectangle bounds = new Rectangle(0, 0, 32, 32);
+	private int offsetHitboxX=4;
+	private int offsetHitboxY=20;
+	private Shape hitbox = new Rectangle(offsetHitboxX, offsetHitboxY, 24, 12);
 	private Animation characterRight;
 	private Animation characterLeft;
 	private Animation characterUp;
@@ -20,32 +24,27 @@ public class Character {
 	private Animation currentAnimation;
 	private float x, y;
 	private float speed = 2.5f;
-	private static final int CHARACTER_ANIMATION_FRAME_DURATION = 150;
+	private static final int[] CHARACTER_ANIM_DURATION = new int[] {150,150,150,150};
+	private boolean isHitboxDisplayed=false;
 
 	public Character() {
 		try {
 			spriteSheet = new SpriteSheet("sprites/characters.png", 32, 32);
-			characterRight = new Animation();
-			characterLeft = new Animation();
-			characterUp = new Animation();
-			characterDown = new Animation();
+			characterRight = new Animation(false);
+			characterLeft = new Animation(false);
+			characterUp = new Animation(false);
+			characterDown = new Animation(false);
 			for(int i=0; i<3; i++) {
-				characterUp.addFrame(spriteSheet.getSprite(i, 3), CHARACTER_ANIMATION_FRAME_DURATION);
-				characterDown.addFrame(spriteSheet.getSprite(i, 0), CHARACTER_ANIMATION_FRAME_DURATION);
-				characterLeft.addFrame(spriteSheet.getSprite(i, 1), CHARACTER_ANIMATION_FRAME_DURATION);
-				characterRight.addFrame(spriteSheet.getSprite(i, 2), CHARACTER_ANIMATION_FRAME_DURATION);
-				characterUp.setAutoUpdate(false);
-				characterDown.setAutoUpdate(false);
-				characterLeft.setAutoUpdate(false);
-				characterRight.setAutoUpdate(false);
+				characterUp.addFrame(spriteSheet.getSprite(i, 3), CHARACTER_ANIM_DURATION[i]);
+				characterDown.addFrame(spriteSheet.getSprite(i, 0), CHARACTER_ANIM_DURATION[i]);
+				characterLeft.addFrame(spriteSheet.getSprite(i, 1), CHARACTER_ANIM_DURATION[i]);
+				characterRight.addFrame(spriteSheet.getSprite(i, 2), CHARACTER_ANIM_DURATION[i]);
 			}
 
 			x = 150f;
 			y = 150f;
 
 			currentAnimation = characterRight;
-			bounds.setLocation(x, y);
-
 		} catch(SlickException se) {
 			se.printStackTrace();
 		}
@@ -53,34 +52,75 @@ public class Character {
 
 	public void render(Graphics g) {
 		currentAnimation.draw(x, y);
-		bounds.setLocation(x, y);
+		hitbox.setLocation(this.x+offsetHitboxX, this.y+offsetHitboxY);
+		
+		if(isHitboxDisplayed)
+			g.draw(hitbox);
 	}
+	
+	public void moveCharacter(int direction, int delta, boolean effectiveMove) {
+		if(effectiveMove) {
+			//Shape s = getNextMoveHitbox(direction);
+			Point p = getNextMove(direction, x, y);
 
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		Input input = container.getInput();
-		boolean isMoving = false;
-		
-		if(input.isKeyDown(Keyboard.KEY_RIGHT)) {
-			currentAnimation = characterRight;
-			isMoving = true;
-			x += this.speed;
-		} else if(input.isKeyDown(Keyboard.KEY_LEFT)) {
-			currentAnimation = characterLeft;
-			isMoving = true;
-			x -= this.speed;
-		} else if(input.isKeyDown(Keyboard.KEY_UP)) {
-			currentAnimation = characterUp;
-			isMoving = true;
-			y -= this.speed;
-		} else if(input.isKeyDown(Keyboard.KEY_DOWN)) {
-			currentAnimation = characterDown;
-			isMoving = true;
-			y += this.speed;
+			this.x = p.getX();
+			this.y = p.getY();
+			
+			// update character animation frame if needed
+			currentAnimation.update(delta);	
 		}
 		
-		if(isMoving) {
-			// Delta is the number of ms since the last update
-			currentAnimation.update(delta);
+		setCurrentAnimation(direction);
+	}
+	
+	private void setCurrentAnimation(int direction) {
+		switch(direction) {
+		case DIRECTION_UP:
+			currentAnimation=characterUp;
+			break;
+		case DIRECTION_DOWN:
+			currentAnimation=characterDown;
+			break;
+		case DIRECTION_LEFT:
+			currentAnimation=characterLeft;
+			break;
+		case DIRECTION_RIGHT:
+			currentAnimation=characterRight;
+			break;
 		}
+	}
+	
+	public Shape getNextMoveHitbox(int direction) {
+		Point p = getNextMove(direction, hitbox.getX(), hitbox.getY());
+		return new Rectangle(p.getX(), p.getY(), hitbox.getWidth(), hitbox.getHeight());
+	}
+	
+	private Point getNextMove(int direction, float cx, float cy) {
+		Point p = new Point(cx, cy);
+		
+		switch(direction) {
+		case DIRECTION_UP:
+			p.setY(cy-this.speed);
+			break;
+		case DIRECTION_DOWN:
+			p.setY(cy+this.speed);
+			break;
+		case DIRECTION_LEFT:
+			p.setX(cx-this.speed);
+			break;
+		case DIRECTION_RIGHT:
+			p.setX(cx+this.speed);
+			break;
+		}
+		
+		return p;
+	}
+	
+	public Shape getHitbox() {
+		return hitbox;
+	}
+	
+	public void toggleDrawingHitbox() {
+		isHitboxDisplayed = !isHitboxDisplayed;
 	}
 }

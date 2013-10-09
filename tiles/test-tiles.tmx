@@ -8,7 +8,7 @@
  </tileset>
  <layer name="background" width="20" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA7WTzQrCMBCEAyJVc/GnFWq91keoh96q+P6P5BZ2YFiSdCl6GCZpsrNf2mYIITxFw4J/RDvRXtVl9k2iV8Kjmc95tahRjZk6zo8OPjCO+jw6+ayDD4ydgy/l6J/jW6pnf4seqrPhO4n6hErnvCvLQbmQxc/seKIzIedITHP91ZyV/xuso9dA9Xw2W1vpuKJxk9jX07vhdcxrkzX7hd4l70O97cG5FdXDt6JbRqkezMcZrWpT+I6WDTlcjwzPf2bZtlSfusdL970N6zhy7r2/7LGwvpbDw1fq6/V/8v3Cv/iTnRNABgAA
+   H4sIAAAAAAAAA72TzQrCMBCEA1Kq5uJPK9R6rS8gxENvVXz/R3ILOzAsSRqKeBgmfzv5kjbBOfcUhQX/iLainapPrJtEr4h705/zGlGrGhN1nO8L+MA46rgv5LMOPjD2BXwxx/4pvqV69rforjoZvqNoiCh3zpuy7JULWTxm2xOdCTkHYprrL+as/N9gHnsFquez2dpa2zW128i6ge6G59FvTNbsZ7pLXod6uwfn1lQPr0TXhGJ7MB9ndKpN5jtaNuRwPTJK/jPLVlF97B0vvffOreNIeen7ZX9k5tdylPD5lbz/4vuFfwGYsSmTQAYAAA==
   </data>
  </layer>
  <layer name="foreground" width="20" height="20">
@@ -22,6 +22,14 @@
   </data>
  </layer>
  <objectgroup name="collision" width="20" height="20">
-  <object x="351" y="433" width="122" height="45"/>
+  <object name="treeMask" x="352" y="416" width="128" height="64"/>
+  <object x="514" y="76" width="25" height="17"/>
+  <object x="194" y="44" width="25" height="17"/>
+  <object x="100" y="76" width="25" height="17"/>
+  <object x="260" y="140" width="25" height="17"/>
+  <object x="35" y="236" width="25" height="17"/>
+  <object x="98" y="554" width="25" height="17"/>
+  <object x="258" y="426" width="25" height="17"/>
+  <object x="581" y="428" width="25" height="17"/>
  </objectgroup>
 </map>
