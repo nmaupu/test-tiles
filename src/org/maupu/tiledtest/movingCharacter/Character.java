@@ -17,16 +17,10 @@ public class Character {
 	private Animation characterLeft;
 	private Animation characterUp;
 	private Animation characterDown;
-	private static final int DIR_U = Keyboard.KEY_UP;
-	private static final int DIR_D = Keyboard.KEY_DOWN;
-	private static final int DIR_L = Keyboard.KEY_LEFT;
-	private static final int DIR_R = Keyboard.KEY_RIGHT;
-	private int direction = DIR_R;
+	private Animation currentAnimation;
 	private float x, y;
 	private float speed = 2.5f;
-	private static final int FRAME_DURATION = 150;
-	private long lastTick = 0;
-	private int currentFrame = 0;
+	private static final int CHARACTER_ANIMATION_FRAME_DURATION = 150;
 
 	public Character() {
 		try {
@@ -36,10 +30,10 @@ public class Character {
 			characterUp = new Animation();
 			characterDown = new Animation();
 			for(int i=0; i<3; i++) {
-				characterUp.addFrame(spriteSheet.getSprite(i, 3), 150);
-				characterDown.addFrame(spriteSheet.getSprite(i, 0), 150);
-				characterLeft.addFrame(spriteSheet.getSprite(i, 1), 150);
-				characterRight.addFrame(spriteSheet.getSprite(i, 2), 150);
+				characterUp.addFrame(spriteSheet.getSprite(i, 3), CHARACTER_ANIMATION_FRAME_DURATION);
+				characterDown.addFrame(spriteSheet.getSprite(i, 0), CHARACTER_ANIMATION_FRAME_DURATION);
+				characterLeft.addFrame(spriteSheet.getSprite(i, 1), CHARACTER_ANIMATION_FRAME_DURATION);
+				characterRight.addFrame(spriteSheet.getSprite(i, 2), CHARACTER_ANIMATION_FRAME_DURATION);
 				characterUp.setAutoUpdate(false);
 				characterDown.setAutoUpdate(false);
 				characterLeft.setAutoUpdate(false);
@@ -49,6 +43,7 @@ public class Character {
 			x = 150f;
 			y = 150f;
 
+			currentAnimation = characterRight;
 			bounds.setLocation(x, y);
 
 		} catch(SlickException se) {
@@ -57,73 +52,35 @@ public class Character {
 	}
 
 	public void render(Graphics g) {
-		switch(direction) {
-		case DIR_R:
-			characterRight.draw(x, y);
-			break;
-		case DIR_L:
-			characterLeft.draw(x, y);
-			break;
-		case DIR_U:
-			characterUp.draw(x, y);
-			break;
-		case DIR_D:
-			characterDown.draw(x, y);
-			break;
-		}
-		
+		currentAnimation.draw(x, y);
 		bounds.setLocation(x, y);
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		Input input = container.getInput();
-		
-		if(lastTick == 0)
-			lastTick = System.currentTimeMillis();
-		
 		boolean isMoving = false;
 		
 		if(input.isKeyDown(Keyboard.KEY_RIGHT)) {
+			currentAnimation = characterRight;
 			isMoving = true;
-			if(direction != DIR_R) {
-				currentFrame = 0;
-				direction = DIR_R;
-			}
-			
 			x += this.speed;
 		} else if(input.isKeyDown(Keyboard.KEY_LEFT)) {
+			currentAnimation = characterLeft;
 			isMoving = true;
-			if(direction != DIR_L) {
-				currentFrame = 0;
-				direction = DIR_L;
-			}
-			
 			x -= this.speed;
 		} else if(input.isKeyDown(Keyboard.KEY_UP)) {
+			currentAnimation = characterUp;
 			isMoving = true;
-			if(direction != DIR_U) {
-				currentFrame = 0;
-				direction = DIR_U;
-			}
-			
 			y -= this.speed;
 		} else if(input.isKeyDown(Keyboard.KEY_DOWN)) {
+			currentAnimation = characterDown;
 			isMoving = true;
-			if(direction != DIR_D) {
-				currentFrame = 0;
-				direction = DIR_D;
-			}
-			
 			y += this.speed;
 		}
 		
-		if(isMoving && System.currentTimeMillis()-lastTick > FRAME_DURATION) {
-			lastTick = 0;
-			currentFrame = (currentFrame+1)%3;
-			characterUp.setCurrentFrame(currentFrame);
-			characterDown.setCurrentFrame(currentFrame);
-			characterLeft.setCurrentFrame(currentFrame);
-			characterRight.setCurrentFrame(currentFrame);	
+		if(isMoving) {
+			// Delta is the number of ms since the last update
+			currentAnimation.update(delta);
 		}
 	}
 }
