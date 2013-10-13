@@ -45,6 +45,7 @@ public class Character {
 			
 			x = ConfigValues.RESOLUTION_WIDTH / 2 - currentAnimation.getWidth() / 2;
 			y = ConfigValues.RESOLUTION_HEIGHT / 2 - currentAnimation.getHeight() / 2;
+			hitbox.setLocation(this.x+offsetHitboxX, this.y+offsetHitboxY);
 		} catch(SlickException se) {
 			se.printStackTrace();
 		}
@@ -52,30 +53,15 @@ public class Character {
 
 	public void render(Graphics g) {
 		currentAnimation.draw(x, y);
-		hitbox.setLocation(this.x+offsetHitboxX, this.y+offsetHitboxY);
 		
 		if(isHitboxDisplayed)
 			g.draw(hitbox);
 	}
-	
-	public void moveCharacter(int direction, int delta, boolean effectiveMove) {
-		if(effectiveMove) {
-			//Shape s = getNextMoveHitbox(direction);
-			Point p = getNextMove(direction, x, y);
-
-			this.x = p.getX();
-			this.y = p.getY();
-			
-			// update character animation frame if needed
-			currentAnimation.update(delta);	
-		}
 		
-		setCurrentAnimation(direction);
-	}
-	
-	public void newMoveCharacter(int direction, int delta, float velocityX, float velocityY) {
+	public void moveCharacter(int direction, int delta, float velocityX, float velocityY) {
 		this.x += velocityX;
 		this.y += velocityY;
+		hitbox.setLocation(this.x+offsetHitboxX, this.y+offsetHitboxY);
 		
 		currentAnimation.update(delta);
 		setCurrentAnimation(direction);

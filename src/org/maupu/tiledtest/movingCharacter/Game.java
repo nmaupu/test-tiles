@@ -146,7 +146,7 @@ public class Game extends BasicGameState {
 				viewportX += viewportXOffset;
 				viewportY += viewportYOffset;
 				
-				character.newMoveCharacter(direction, delta, characterVelocityX, characterVelocityY);
+				character.moveCharacter(direction, delta, characterVelocityX, characterVelocityY);
 				
 				// Updating hitbox coordinates depending on viewport
 				it = gameMap.getCollisionShapes().iterator();
@@ -156,7 +156,7 @@ public class Game extends BasicGameState {
 					s.setY(s.getY()-viewportYOffset);
 				}
 			} else {
-				character.newMoveCharacter(direction, delta, 0, 0);
+				character.moveCharacter(direction, delta, 0, 0);
 			}
 		}	
 	}
