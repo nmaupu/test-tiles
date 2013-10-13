@@ -104,7 +104,7 @@ public class Character {
 	}
 	
 	public Shape getNextMoveHitbox(int direction, float velocityX, float velocityY) {
-		Point p = getNextMove(direction, hitbox.getX()+velocityX, hitbox.getY()+velocityY);
+		Point p = new Point(hitbox.getX(), hitbox.getY());
 		return new Rectangle(p.getX()+velocityX, p.getY()+velocityY, hitbox.getWidth(), hitbox.getHeight());
 	}
 	
