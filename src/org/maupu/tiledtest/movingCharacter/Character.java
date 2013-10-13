@@ -41,10 +41,10 @@ public class Character {
 				characterRight.addFrame(spriteSheet.getSprite(i, 2), CHARACTER_ANIM_DURATION[i]);
 			}
 
-			x = 150f;
-			y = 150f;
-
 			currentAnimation = characterRight;
+			
+			x = ConfigValues.RESOLUTION_WIDTH / 2 - currentAnimation.getWidth() / 2;
+			y = ConfigValues.RESOLUTION_HEIGHT / 2 - currentAnimation.getHeight() / 2;
 		} catch(SlickException se) {
 			se.printStackTrace();
 		}
@@ -73,6 +73,14 @@ public class Character {
 		setCurrentAnimation(direction);
 	}
 	
+	public void newMoveCharacter(int direction, int delta, float velocityX, float velocityY) {
+		this.x += velocityX;
+		this.y += velocityY;
+		
+		currentAnimation.update(delta);
+		setCurrentAnimation(direction);
+	}
+	
 	private void setCurrentAnimation(int direction) {
 		switch(direction) {
 		case DIRECTION_UP:
@@ -93,6 +101,11 @@ public class Character {
 	public Shape getNextMoveHitbox(int direction) {
 		Point p = getNextMove(direction, hitbox.getX(), hitbox.getY());
 		return new Rectangle(p.getX(), p.getY(), hitbox.getWidth(), hitbox.getHeight());
+	}
+	
+	public Shape getNextMoveHitbox(int direction, float velocityX, float velocityY) {
+		Point p = getNextMove(direction, hitbox.getX()+velocityX, hitbox.getY()+velocityY);
+		return new Rectangle(p.getX()+velocityX, p.getY()+velocityY, hitbox.getWidth(), hitbox.getHeight());
 	}
 	
 	private Point getNextMove(int direction, float cx, float cy) {
@@ -122,5 +135,25 @@ public class Character {
 	
 	public void toggleDrawingHitbox() {
 		isHitboxDisplayed = !isHitboxDisplayed;
+	}
+	
+	public float getX() {
+		return x;
+	}
+	
+	public float getY() {
+		return y;
+	}
+	
+	public float getSpeed() {
+		return speed;
+	}
+	
+	public boolean isCenteredX() {
+		return 	x == ConfigValues.RESOLUTION_WIDTH / 2 - currentAnimation.getWidth() / 2; 
+	}
+	
+	public boolean isCenteredY() {
+		return y == ConfigValues.RESOLUTION_HEIGHT / 2 - currentAnimation.getHeight() / 2;
 	}
 }
